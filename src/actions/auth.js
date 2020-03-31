@@ -52,7 +52,7 @@ const receiveVerify = () => {
         type: VERIFY_SUCCESS
     };
 };
-
+//send the user object from firebase to the dispatch where it gets stored in state
 export const loginUser = () => dispatch => {
     dispatch(requestLogin());
     myFirebase

@@ -14,7 +14,7 @@ const requestLogin = () => {
     };
 };
 
-const receiveLogin = user =>  {
+const receiveLogin = (user) =>  {
     return {
         type: LOGIN_SUCCESS,
         user
@@ -57,9 +57,9 @@ export const loginUser = () => dispatch => {
     dispatch(requestLogin());
     myFirebase
         .auth()
-        .signInWithRedirect(googleAuth)
+        .signInWithPopup(googleAuth)
         .then(user => {
-            dispatchEvent(receiveLogin(user));
+            dispatch(receiveLogin(user));
         })
         .catch(error => {
             console.error((error));

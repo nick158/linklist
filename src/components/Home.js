@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {loginUser, logoutUser} from "../actions";
-
+import AddList from "./addList";
 import { withStyles } from "@material-ui/styles";
 
 class Home extends Component{
@@ -16,6 +16,7 @@ class Home extends Component{
              <div>
                  <h1>This is your app's protected area.</h1>
                  <p>Any routes here will also be protected</p>
+                 <AddList/>
                  <button onClick={this.handleLogout}>Logout</button>
                  {isLoggingOut && <p>Logging Out....</p>}
                  {logoutError && <p>Error logging out</p>}

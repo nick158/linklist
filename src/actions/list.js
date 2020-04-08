@@ -6,6 +6,9 @@ export const MAKE_LIST_FAILURE = "MAKE_LIST_FAILURE";
 export const DELETE_LIST_REQUEST = "DELETE_LIST_REQUEST";
 export const DELETE_LIST_SUCCESS = "DELETE_LIST_SUCCESS";
 export const DELETE_LIST_FAILURE = "DELETE_LIST_FAILURE";
+export const GET_LISTS_REQUEST = "GET_LISTS_REQUEST";
+export const GET_LISTS_SUCCESS = "GET_LISTS_SUCCESS";
+export const GET_LISTS_FAILURE = "GET_LISTS_FAILURE";
 const makeListRequest = () => {
     return {
         type: MAKE_LIST_REQUEST
@@ -38,10 +41,25 @@ const deleteListFailure = () => {
         type: DELETE_LIST_FAILURE
     }
 };
+//get lists associated with a specific user so that it can be viewed in a component
+const getListsRequest = () => {
+    return {
+        type: GET_LISTS_REQUEST
+    }
+};
+const getListsSuccess = (lists) => {
+    return{
+        type: GET_LISTS_SUCCESS,
+        lists
+    }
+};
 
-//add an item to the list
-
-//delete an item from the list
+const getListsFailure = () => {
+    return{
+        type: GET_LISTS_FAILURE
+    }
+};
+//add a list, listDetails are set in the component AddList.js (user, desc, date, title)
 export const makeList = (listDetails) => dispatch => {
     dispatch(makeListRequest());
     myFirebase.database().ref('lists').push(listDetails)
@@ -52,4 +70,12 @@ export const makeList = (listDetails) => dispatch => {
             console.error((error));
             dispatch(makeListFailure());
         })
+};
+
+export const getLists = (userId) => dispatch => {
+    dispatch(getListsRequest());
+    myFirebase.database().ref('lists')
+        .orderByChild('owner')
+        .equalTo(userId)
+        .
 };

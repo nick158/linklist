@@ -10,7 +10,7 @@ class AddList extends Component {
         const {dispatch} = this.props;
         const listObj = {
            listTitle: this.state.tempAddListTitle,
-           uid: this.props.user.uid,
+           owner: this.props.user.uid,
            dateUpdated: Date.now(),
             description: this.state.description,
             items: []

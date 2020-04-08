@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {loginUser, logoutUser} from "../actions";
-import AddList from "./addList";
+import AddList from "./AddList";
 import { withStyles } from "@material-ui/styles";
 
 class Home extends Component{
@@ -27,7 +27,8 @@ class Home extends Component{
 function mapStateToProps(state) {
     return {
         isLoggingOut: state.auth.isLoggingOut,
-        logoutError: state.auth.logoutError
+        logoutError: state.auth.logoutError,
+        user: state.auth.user
     }
 }
 export default connect(mapStateToProps)(Home);

@@ -47,10 +47,10 @@ const getListsRequest = () => {
         type: GET_LISTS_REQUEST
     }
 };
-const getListsSuccess = (lists) => {
+const getListsSuccess = (userLists) => {
     return{
         type: GET_LISTS_SUCCESS,
-        lists
+        userLists
     }
 };
 
@@ -77,5 +77,16 @@ export const getLists = (userId) => dispatch => {
     myFirebase.database().ref('lists')
         .orderByChild('owner')
         .equalTo(userId)
-        .
+        .on('value', function(snapshot){
+            //logging purposes
+            console.log(snapshot.val());
+            return snapshot.val();
+        })
+        .then(retrievedLists => {
+            dispatch(getListsSuccess(retrievedLists));
+        })
+        .catch(error => {
+            console.error((error));
+            dispatch(getListsFailure());
+        })
 };

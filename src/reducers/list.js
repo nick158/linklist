@@ -3,7 +3,10 @@ import {
     GET_LISTS_REQUEST, GET_LISTS_SUCCESS,
     MAKE_LIST_FAILURE,
     MAKE_LIST_REQUEST,
-    MAKE_LIST_SUCCESS
+    MAKE_LIST_SUCCESS,
+    ADD_TO_LIST_REQUEST,
+    ADD_TO_LIST_SUCCESS,
+    ADD_TO_LIST_FAILURE
 } from "../actions";
 
 export default (state = {
@@ -15,7 +18,9 @@ export default (state = {
         makingList: false,
         makeListError: false,
         retrievingList: false,
-        retrieveListErr: false
+        retrieveListErr: false,
+        addingToList: false,
+        addToListErr: false
 }, action) => {
     switch (action.type) {
         case MAKE_LIST_REQUEST:
@@ -54,6 +59,24 @@ export default (state = {
                 retrieveListErr: true,
                 retrievingList: false
             };
+        case ADD_TO_LIST_REQUEST:
+            return {
+                ...state,
+                addingToList: true,
+                addingToListErr: false
+            };
+        case ADD_TO_LIST_SUCCESS:
+            return {
+                ...state, 
+                addingToList: false,
+                list: action.list
+            }
+        case ADD_TO_LIST_FAILURE:
+            return {
+                ...state, 
+                addingToList: false,
+                addingToListErr: true
+            }
         default:
             return state;
     }

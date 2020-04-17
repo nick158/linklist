@@ -9,6 +9,10 @@ export const DELETE_LIST_FAILURE = "DELETE_LIST_FAILURE";
 export const GET_LISTS_REQUEST = "GET_LISTS_REQUEST";
 export const GET_LISTS_SUCCESS = "GET_LISTS_SUCCESS";
 export const GET_LISTS_FAILURE = "GET_LISTS_FAILURE";
+export const ADD_TO_LIST_REQUEST = "ADD_TO_LIST_REQUEST";
+export const ADD_TO_LIST_SUCCESS = "ADD_TO_LIST_SUCCESS";
+export const ADD_TO_LIST_FAILURE = "ADD_TO_LIST_FAILURE";
+
 const makeListRequest = () => {
     return {
         type: MAKE_LIST_REQUEST
@@ -59,6 +63,27 @@ const getListsFailure = () => {
         type: GET_LISTS_FAILURE
     }
 };
+
+//add to a specified list 
+const addToListRequest = () => {
+    return{
+        type: ADD_TO_LIST_REQUEST
+    }
+}
+
+const addToListFailure = () => {
+    return{
+        type: ADD_TO_LIST_FAILURE
+    }
+}
+
+const addToListSuccess = (list) => {
+    return{
+        type: ADD_TO_LIST_SUCCESS,
+        list
+    }
+}
+
 //add a list, listDetails are set in the component AddList.js (user, desc, date, title)
 export const makeList = (listDetails) => dispatch => {
     dispatch(makeListRequest());
@@ -88,5 +113,18 @@ export const getLists = (userId) => dispatch => {
         .catch(error => {
             console.error((error));
             dispatch(getListsFailure());
+        })
+};
+
+export const addToList = (listId, item) => dispatch => {
+    dispatch(addToListRequest)
+    myFirebase.database().ref("lists/-" + listId + "/items")
+        .push(item)
+        .then(list => {
+            dispatch(addToListSuccess(list));
+        })
+        .catch(error => {
+            console.error(error);
+            dispatch(addToListFailure);
         })
 };
